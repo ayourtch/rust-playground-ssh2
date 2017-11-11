@@ -1,0 +1,165 @@
+    Updating registry `https://github.com/rust-lang/crates.io-index`
+   Compiling bitflags v0.7.0
+   Compiling pkg-config v0.3.9
+   Compiling cc v1.0.3
+   Compiling libc v0.2.33
+   Compiling cmake v0.1.26
+   Compiling libz-sys v1.0.18
+   Compiling openssl-sys v0.9.20
+   Compiling libssh2-sys v0.2.6
+   Compiling ssh2 v0.3.2
+   Compiling sample v0.1.0 (file:///home/ayourtch/rust/sample/sample)
+error: this file contains an un-closed delimiter
+  --> src/main.rs:82:3
+   |
+82 | }
+   |   ^
+   |
+help: did you mean to close this delimiter?
+  --> src/main.rs:19:36
+   |
+19 | impl <'h> DeviceSSHConnection <'h> {
+   |                                    ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:44:24
+   |
+44 |   fn start2(&mut self) {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:67:24
+   |
+67 |     match self.channel {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:68:26
+   |
+68 |       Some(ref mut c) => {
+   |                          ^
+
+error: this file contains an un-closed delimiter
+  --> src/main.rs:82:3
+   |
+82 | }
+   |   ^
+   |
+help: did you mean to close this delimiter?
+  --> src/main.rs:19:36
+   |
+19 | impl <'h> DeviceSSHConnection <'h> {
+   |                                    ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:44:24
+   |
+44 |   fn start2(&mut self) {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:67:24
+   |
+67 |     match self.channel {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:68:26
+   |
+68 |       Some(ref mut c) => {
+   |                          ^
+
+error: this file contains an un-closed delimiter
+  --> src/main.rs:82:3
+   |
+82 | }
+   |   ^
+   |
+help: did you mean to close this delimiter?
+  --> src/main.rs:19:36
+   |
+19 | impl <'h> DeviceSSHConnection <'h> {
+   |                                    ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:44:24
+   |
+44 |   fn start2(&mut self) {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:67:24
+   |
+67 |     match self.channel {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:68:26
+   |
+68 |       Some(ref mut c) => {
+   |                          ^
+
+error: this file contains an un-closed delimiter
+  --> src/main.rs:82:3
+   |
+82 | }
+   |   ^
+   |
+help: did you mean to close this delimiter?
+  --> src/main.rs:19:36
+   |
+19 | impl <'h> DeviceSSHConnection <'h> {
+   |                                    ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:44:24
+   |
+44 |   fn start2(&mut self) {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:67:24
+   |
+67 |     match self.channel {
+   |                        ^
+help: did you mean to close this delimiter?
+  --> src/main.rs:68:26
+   |
+68 |       Some(ref mut c) => {
+   |                          ^
+
+error: expected type, found keyword `ref`
+  --> src/main.rs:36:29
+   |
+36 |   fn get_channel <'x>(sess: ref Session) -> Option<Channel<'x>> {
+   |                             ^^^
+
+error: expected one of `!`, `&&`, `&`, `(`, `)`, `*`, `<`, `?`, `[`, `_`, `extern`, `fn`, `for`, `impl`, `unsafe`, or lifetime, found `ref`
+  --> src/main.rs:36:29
+   |
+36 |   fn get_channel <'x>(sess: ref Session) -> Option<Channel<'x>> {
+   |                            -^^^ unexpected token
+   |                            |
+   |                            expected one of 16 possible tokens here
+
+error[E0412]: cannot find type `WrappedSession` in this scope
+  --> src/main.rs:11:7
+   |
+11 |   ws: WrappedSession <'h>,
+   |       ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0412]: cannot find type `DebugLogger` in this scope
+  --> src/main.rs:15:19
+   |
+15 |   logger: Option <DebugLogger>,
+   |                   ^^^^^^^^^^^ not found in this scope
+
+error[E0601]: main function not found
+  |
+  = note: the main function must be defined at the crate level but you have one or more functions named 'main' that are not defined at the crate level. Either move the definition or attach the `#[main]` attribute to override this behavior.
+note: here is a function named 'main'
+ --> src/main.rs:71:1
+  |
+71| / fn main() {
+72| |   println!("hello!");
+73| |
+74| |   let target = "192.168.127.151:22";
+... |
+81| |   conn.finish();
+82| | }
+  | |_^
+
+error: aborting due to 9 previous errors
+
+error: Could not compile `sample`.
+
+To learn more, run the command again with --verbose.
