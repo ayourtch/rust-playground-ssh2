@@ -6,3 +6,4 @@ authors = ["Andrew Yourtchenko <ayourtch@gmail.com>"]
 [dependencies]
 
 ssh2 = "*"
+owning_ref = "*"
