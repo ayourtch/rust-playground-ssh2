@@ -7,3 +7,4 @@ authors = ["Andrew Yourtchenko <ayourtch@gmail.com>"]
 
 ssh2 = "*"
 owning_ref = "*"
+rental = "*"

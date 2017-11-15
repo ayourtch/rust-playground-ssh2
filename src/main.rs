@@ -2,13 +2,25 @@ extern crate ssh2;
 
 use ssh2::{Session, Channel, Error};
 use std::net::{TcpStream};
-extern crate owning_ref;
 
-use owning_ref::OwningHandle;
+#[macro_use]
+extern crate rental;
 
-struct DeviceSSHConnection {
+rental! {
+  pub mod rentals {
+    use super::*;
+
+    #[rental_mut]
+    pub struct DeviceSSHConnection {
+      session: Box<Session>,
+      channel: Channel<'session>,
+    }
+  }
+}
+
+pub struct DeviceSSHConnection {
   tcp: TcpStream,
-  channel: OwningHandle<Box<Session>, Box<Channel<'static>>>,
+  r: rentals::DeviceSSHConnection,
 }
 
 impl DeviceSSHConnection {
@@ -23,22 +35,30 @@ impl DeviceSSHConnection {
     session.userauth_password(c_user, c_pass).unwrap();
 
     let mut sess = Box::new(session);
-    let mut oref = OwningHandle::new_with_fn(sess, unsafe { |x| Box::new((*x).channel_session().unwrap()) } );
-    oref.shell().unwrap();
     let ret = DeviceSSHConnection {
       tcp: tcp,
-      channel: oref
+      r: rentals::DeviceSSHConnection::new(
+        sess,
+        |s| {
+          let mut chan = s.channel_session().unwrap();
+          chan.shell().unwrap();
+          chan
+        }
+      )
     };
-    ret 
+    ret
   }
-
   fn write(&mut self, data: &str) -> std::io::Result<usize> {
     use std::io::prelude::*;
-    self.channel.write(data.as_bytes())
+    self.r.rent_mut(|c| {
+      c.write(data.as_bytes())
+    })
   }
   fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
     use std::io::prelude::*;
-    self.channel.read(buf)
+    self.r.rent_mut(|c| {
+      c.read(buf)
+    })
   }
 
   fn do_io(&mut self) {
@@ -52,19 +72,17 @@ impl DeviceSSHConnection {
   }
 
   fn finish(&mut self) {
-    self.channel.wait_close();
-    println!("{}", self.channel.exit_status().unwrap());
+    self.r.rent_mut(|c| {
+      c.wait_close();
+      println!("{}", c.exit_status().unwrap());
+    });
   }
 }
 
 
-fn conn() -> OwningHandle<Box<Session>, Box<Channel<'static>>> {
-  let sess = Box::new(Session::new().unwrap());
-  let oref = OwningHandle::new_with_fn(sess, unsafe { |x| Box::new((*x).channel_session().unwrap()) } );
-  oref
-}
 
 fn main() {
+  use std::io::prelude::*;
   println!("hello!");
   let target = "192.168.127.151:22";
 
